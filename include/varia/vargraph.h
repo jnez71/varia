@@ -1,0 +1,17 @@
+/*
+Description.
+*/
+#pragma once
+#include <varia/common.h>
+#include <varia/var.h>
+
+namespace varia {
+
+//////////////////////////////////////////////////
+
+class VarGraph {
+};
+
+//////////////////////////////////////////////////
+
+} // namespace varia
