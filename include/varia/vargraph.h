@@ -14,18 +14,18 @@ private:
     friend class Var;
 
     struct Dep {
-        Idx const x;
-        Real const d_dx;
-        Idx const y;
-        Real const d_dy;
-        Dep(Idx x, Real d_dx, Idx y, Real d_dy) :
+        uint const x;
+        double const d_dx;
+        uint const y;
+        double const d_dy;
+        Dep(uint x, double d_dx, uint y, double d_dy) :
             x(x), d_dx(d_dx), y(y), d_dy(d_dy) {};
     };
-    Seq<Dep> deps;
+    std::vector<Dep> deps;
 
-    Idx new_nullary();
-    Idx new_unary(Idx x, Real d_dx);
-    Idx new_binary(Idx x, Real d_dx, Idx y, Real d_dy);
+    uint new_nullary();
+    uint new_unary(uint x, double d_dx);
+    uint new_binary(uint x, double d_dx, uint y, double d_dy);
 
 public:
     VarGraph() =default;

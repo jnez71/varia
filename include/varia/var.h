@@ -12,18 +12,18 @@ namespace varia {
 class Var {
 private:
     VarGraph* vgp;
-    Idx idx;
-    Real val;
+    uint idx;
+    double val;
 
-    Var(VarGraph* vgp, Idx idx, Real val);
+    Var(VarGraph* vgp, uint idx, double val);
 
 public:
-    Var(VarGraph* vgp, Real val);
+    Var(VarGraph* vgp, double val);
     Var(Var const& other);
     Var& operator=(Var const& other);
 
-    inline Real value() const {return val;}
-    Real derivative() const;
+    inline double value() const {return val;}
+    double derivative() const;
 
     Var sin() const;
     Var exp() const;

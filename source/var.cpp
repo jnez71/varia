@@ -7,7 +7,7 @@ namespace varia {
 
 //////////////////////////////////////////////////
 
-Var::Var(VarGraph* vgp, Idx idx, Real val) :
+Var::Var(VarGraph* vgp, uint idx, double val) :
     vgp(vgp),
     idx(idx),
     val(val) {
@@ -15,7 +15,7 @@ Var::Var(VarGraph* vgp, Idx idx, Real val) :
 
 //////////////////////////////////////////////////
 
-Var::Var(VarGraph* vgp, Real val) :
+Var::Var(VarGraph* vgp, double val) :
     vgp(vgp),
     idx(vgp->new_nullary()),
     val(val) {
@@ -39,7 +39,7 @@ Var& Var::operator=(Var const& other) {
 
 //////////////////////////////////////////////////
 
-Real Var::derivative() const {
+double Var::derivative() const {
     return -1;//???
 }
 
@@ -54,7 +54,7 @@ Var Var::sin() const {
 ////
 
 Var Var::exp() const {
-    Real exp_val = std::exp(val);
+    double exp_val = std::exp(val);
     return Var(vgp,
                vgp->new_unary(idx, exp_val),
                exp_val);
