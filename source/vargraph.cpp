@@ -9,7 +9,7 @@ namespace varia {
 
 uint VarGraph::new_nullary() {
     uint n = deps.size();
-    deps.push_back(Dep(n, 0, n, 0));
+    deps.push_back(Dep(0, n, 0, n, 0));
     return n;
 }
 
@@ -17,7 +17,7 @@ uint VarGraph::new_nullary() {
 
 uint VarGraph::new_unary(uint x, double d_dx) {
     uint n = deps.size();
-    deps.push_back(Dep(x, d_dx, n, 0));
+    deps.push_back(Dep(1, x, d_dx, n, 0));
     return n;
 }
 
@@ -25,7 +25,7 @@ uint VarGraph::new_unary(uint x, double d_dx) {
 
 uint VarGraph::new_binary(uint x, double d_dx, uint y, double d_dy) {
     uint n = deps.size();
-    deps.push_back(Dep(x, d_dx, y, d_dy));
+    deps.push_back(Dep(2, x, d_dx, y, d_dy));
     return n;
 }
 

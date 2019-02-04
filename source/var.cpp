@@ -39,8 +39,10 @@ Var& Var::operator=(Var const& other) {
 
 //////////////////////////////////////////////////
 
-double Var::derivative() const {
-    return -1;//???
+std::map<Var const*, double> Var::gradient() const {
+    std::map<Var const*, double> g;
+    g[this] = 1;
+    return g;//???
 }
 
 //////////////////////////////////////////////////
@@ -76,6 +78,14 @@ Var Var::operator*(Var const& other) const {
                vgp->new_binary(this->idx, other.val,
                                other.idx, this->val),
                this->val * other.val);
+}
+
+//////////////////////////////////////////////////
+
+Var Var::operator*(double k) const {
+    return Var(vgp,
+               vgp->new_unary(idx, k),
+               k * val);
 }
 
 //////////////////////////////////////////////////
