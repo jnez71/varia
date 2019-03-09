@@ -1,10 +1,9 @@
 /*
-Description.
+Dependencies, containers, and helper functions common to most code in Varia.
 */
 #pragma once
 #include <iostream>
 #include <vector>
-#include <map>
 #include <cmath>
 
 namespace varia {

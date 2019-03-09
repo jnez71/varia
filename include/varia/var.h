@@ -1,5 +1,6 @@
 /*
-Description.
+Class for a scalar variable that connects to a VarGraph
+in order to record dependencies for automatic differentiation.
 */
 #pragma once
 #include <varia/common.h>
@@ -22,8 +23,17 @@ public:
     Var(Var const& other);
     Var& operator=(Var const& other);
 
+    class Grad {
+    private:
+        friend class Var;
+        std::vector<double> g;
+        Grad(uint n) : g(n, 0.0) {}
+    public:
+        inline double d(Var const& x) const {return g[x.idx];}
+    };
+
     inline double value() const {return val;}
-    std::map<Var const*, double> gradient() const;
+    Grad gradient() const;
 
     Var sin() const;
     // Var cos() const;

@@ -39,10 +39,17 @@ Var& Var::operator=(Var const& other) {
 
 //////////////////////////////////////////////////
 
-std::map<Var const*, double> Var::gradient() const {
-    std::map<Var const*, double> g;
-    g[this] = 1;
-    return g;//???
+Var::Grad Var::gradient() const {
+    Grad grad(vgp->size());
+    grad.g[idx] = 1.0;
+    for(int i=idx; i>-1; --i) {
+        auto const& dep = vgp->deps[i];
+        if(dep.arity > 0)
+            grad.g[dep.x] += dep.d_dx * grad.g[i];
+        if(dep.arity > 1)
+            grad.g[dep.y] += dep.d_dy * grad.g[i];
+    }
+    return grad;
 }
 
 //////////////////////////////////////////////////
@@ -66,8 +73,8 @@ Var Var::exp() const {
 
 Var Var::operator+(Var const& other) const {
     return Var(vgp,
-               vgp->new_binary(this->idx, 1,
-                               other.idx, 1),
+               vgp->new_binary(this->idx, 1.0,
+                               other.idx, 1.0),
                this->val + other.val);
 }
 
