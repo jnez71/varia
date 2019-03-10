@@ -62,11 +62,87 @@ Var Var::sin() const {
 
 ////
 
+Var Var::cos() const {
+    return Var(vgp,
+               vgp->new_unary(idx, -std::sin(val)),
+               std::cos(val));
+}
+
+////
+
+Var Var::tan() const {
+    double cos_val = std::cos(val);
+    return Var(vgp,
+               vgp->new_unary(idx, 1.0/(cos_val*cos_val)),
+               std::tan(val));
+}
+
+////
+
 Var Var::exp() const {
     double exp_val = std::exp(val);
     return Var(vgp,
                vgp->new_unary(idx, exp_val),
                exp_val);
+}
+
+////
+
+Var Var::log() const {
+    return Var(vgp,
+               vgp->new_unary(idx, 1.0/val),
+               std::log(val));
+}
+
+////
+
+Var Var::tanh() const {
+    double tanh_val = std::tanh(val);
+    return Var(vgp,
+               vgp->new_unary(idx, 1.0-tanh_val*tanh_val),
+               tanh_val);
+}
+
+////
+
+Var Var::abs() const {
+    return Var(vgp,
+               vgp->new_unary(idx, val<0.0 ? -1.0 : 1.0),
+               std::abs(val));
+}
+
+////
+
+Var Var::pow(double k) const {
+    double pow_k_1_val = std::pow(val, k-1);
+    return Var(vgp,
+               vgp->new_unary(idx, k*pow_k_1_val),
+               val*pow_k_1_val);
+}
+
+////
+
+Var Var::pow2() const {
+    return Var(vgp,
+               vgp->new_unary(idx, 2.0*val),
+               val*val);
+}
+
+////
+
+Var Var::sqrt() const {
+    double sqrt_val = std::sqrt(val);
+    return Var(vgp,
+               vgp->new_unary(idx, 1.0/(2.0*sqrt_val)),
+               sqrt_val);
+}
+
+////
+
+Var Var::inv() const {
+    return Var(vgp,
+               vgp->new_unary(idx, -1.0/(val*val)),
+               1.0/val);
 }
 
 //////////////////////////////////////////////////
@@ -80,6 +156,15 @@ Var Var::operator+(Var const& other) const {
 
 ////
 
+Var Var::operator-(Var const& other) const {
+    return Var(vgp,
+               vgp->new_binary(this->idx, 1.0,
+                               other.idx, -1.0),
+               this->val - other.val);
+}
+
+////
+
 Var Var::operator*(Var const& other) const {
     return Var(vgp,
                vgp->new_binary(this->idx, other.val,
@@ -87,12 +172,69 @@ Var Var::operator*(Var const& other) const {
                this->val * other.val);
 }
 
+////
+
+Var Var::operator/(Var const& other) const {
+    return Var(vgp,
+               vgp->new_binary(this->idx, 1.0/other.val,
+                               other.idx, -this->val/(other.val*other.val)),
+               this->val / other.val);
+}
+
 //////////////////////////////////////////////////
+
+Var Var::operator+(double k) const {
+    return Var(vgp,
+               vgp->new_unary(idx, 1.0),
+               val + k);
+}
+
+////
+
+Var Var::operator-(double k) const {
+    return Var(vgp,
+               vgp->new_unary(idx, 1.0),
+               val - k);
+}
+
+////
+
+Var Var::rminus(double k) const {
+    return Var(vgp,
+               vgp->new_unary(idx, -1.0),
+               k - val);
+}
+
+////
+
+Var Var::operator-() const {
+    return Var(vgp,
+               vgp->new_unary(idx, -1.0),
+               -val);
+}
+
+////
 
 Var Var::operator*(double k) const {
     return Var(vgp,
                vgp->new_unary(idx, k),
                k * val);
+}
+
+////
+
+Var Var::operator/(double k) const {
+    return Var(vgp,
+               vgp->new_unary(idx, 1.0/k),
+               val / k);
+}
+
+////
+
+Var Var::rdivide(double k) const {
+    return Var(vgp,
+               vgp->new_unary(idx, -k/(val*val)),
+               k / val);
 }
 
 //////////////////////////////////////////////////
