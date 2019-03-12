@@ -7,6 +7,23 @@ namespace varia {
 
 //////////////////////////////////////////////////
 
+uint VarGraph::expected_size = 2;
+
+////
+
+VarGraph::VarGraph() {
+    deps.reserve(expected_size);
+}
+
+////
+
+VarGraph::~VarGraph() {
+    if(deps.size() > expected_size)
+        expected_size = deps.size();
+}
+
+//////////////////////////////////////////////////
+
 uint VarGraph::new_nullary() {
     uint n = deps.size();
     deps.push_back(Dep{0, n, 0.0, n, 0.0});

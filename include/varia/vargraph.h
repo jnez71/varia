@@ -14,6 +14,7 @@ class Var;
 class VarGraph {
 private:
     friend class Var;
+    static uint expected_size;
 
     struct Dep {
         uint const arity;
@@ -29,7 +30,9 @@ private:
     uint new_binary(uint x, double d_dx, uint y, double d_dy);
 
 public:
-    VarGraph() =default;
+    VarGraph();
+    ~VarGraph();
+    static void expect_size(uint n) {expected_size = n;}
     inline uint size() const {return deps.size();}
 };
 
