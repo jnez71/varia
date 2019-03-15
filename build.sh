@@ -4,9 +4,15 @@
 ####
 
 set -e
+pushd $(dirname $0) > /dev/null
 
 mkdir -p build
+cd build
 
-g++ source/* -std=c++11 -O3 -I include -o build/test
+g++ ../source/*.cpp -std=c++11 -O3 -flto -Wpedantic -Wall -Wextra -I ../include -o test
 
-./build/test
+echo "===="
+./test
+echo "===="
+
+popd > /dev/null

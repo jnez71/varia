@@ -35,6 +35,7 @@ Var& Var::operator=(Var const& other) {
     vgp = other.vgp;
     idx = other.idx;
     val = other.val;
+    return *this;
 }
 
 //////////////////////////////////////////////////
