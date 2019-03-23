@@ -106,6 +106,23 @@ Var Var::tanh() const {
 
 ////
 
+Var Var::logistic() const {
+    double z = 1 / (1 + std::exp(-val));
+    return Var(vgp,
+               vgp->new_unary(idx, z*(1-z)),
+               z);
+}
+
+////
+
+Var Var::relu() const {
+    return Var(vgp,
+               vgp->new_unary(idx, val>0.0 ? 1.0 : 0.0),
+               val>0.0 ? val : 0.0);
+}
+
+////
+
 Var Var::abs() const {
     return Var(vgp,
                vgp->new_unary(idx, val<0.0 ? -1.0 : 1.0),

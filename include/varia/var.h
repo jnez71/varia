@@ -41,6 +41,8 @@ public:
     Var exp() const;
     Var log() const;
     Var tanh() const;
+    Var logistic() const;
+    Var relu() const;
     Var abs() const;
     Var pow(double k) const;
     Var pow2() const;
@@ -69,6 +71,8 @@ inline Var tan(Var const& x) {return x.tan();}
 inline Var exp(Var const& x) {return x.exp();}
 inline Var log(Var const& x) {return x.log();}
 inline Var tanh(Var const& x) {return x.tanh();}
+inline Var logistic(Var const& x) {return x.logistic();}
+inline Var relu(Var const& x) {return x.relu();}
 inline Var abs(Var const& x) {return x.abs();}
 inline Var pow(Var const& x, double k) {return x.pow(k);}
 inline Var pow2(Var const& x) {return x.pow2();}

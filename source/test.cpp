@@ -16,7 +16,7 @@ Cost objective(double x_choice, double y_choice) {
     VarGraph vg;
     Var x(&vg, x_choice);
     Var y(&vg, y_choice);
-    Var c = 1 + 3*sqrt(pow(y, 2))*2 + exp(log(exp(sin(x)))) + y*y - abs(y) + tan(inv(y/x))*cos(-x/-y)/sin(x*(1/y));
+    Var c = 1 + 3*sqrt(pow(y, 2))*2 + exp(log(exp(sin(x)))) + y*y - abs(y) + tan(inv(y/x))*cos(-x/-y)/sin(x*(1/y)) + relu(logistic(1e5*x));
     Var q = sin(1/c + 5);
     Var::Grad dc = c.gradient();
     return Cost{c.value(),
