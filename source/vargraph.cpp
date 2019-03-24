@@ -7,26 +7,29 @@ namespace varia {
 
 //////////////////////////////////////////////////
 
-uint VarGraph::expected_size = 2;
+std::vector<std::vector<VarGraph::Dep>> VarGraph::objpool;
 
 ////
 
 VarGraph::VarGraph() {
-    deps.reserve(expected_size);
+    if(objpool.size()) {
+        deps = std::move(objpool.back());
+        objpool.pop_back();
+    }
 }
 
 ////
 
 VarGraph::~VarGraph() {
-    if(deps.size() > expected_size)
-        expected_size = deps.size();
+    deps.clear();
+    objpool.emplace_back(std::move(deps));
 }
 
 //////////////////////////////////////////////////
 
 uint VarGraph::new_nullary() {
     uint n = deps.size();
-    deps.push_back(Dep{0, n, 0.0, n, 0.0});
+    deps.emplace_back(0, n, 0.0, n, 0.0);
     return n;
 }
 
@@ -34,7 +37,7 @@ uint VarGraph::new_nullary() {
 
 uint VarGraph::new_unary(uint x, double d_dx) {
     uint n = deps.size();
-    deps.push_back(Dep{1, x, d_dx, n, 0.0});
+    deps.emplace_back(1, x, d_dx, n, 0.0);
     return n;
 }
 
@@ -42,8 +45,24 @@ uint VarGraph::new_unary(uint x, double d_dx) {
 
 uint VarGraph::new_binary(uint x, double d_dx, uint y, double d_dy) {
     uint n = deps.size();
-    deps.push_back(Dep{2, x, d_dx, y, d_dy});
+    deps.emplace_back(2, x, d_dx, y, d_dy);
     return n;
+}
+
+//////////////////////////////////////////////////
+
+void VarGraph::diagnose() {
+    std::cout << "====================" << std::endl;
+    std::cout << "VarGraph Diagnostics" << std::endl;
+    std::cout << "objpool: [";
+    for(uint i=0; i<objpool.size(); ++i) {
+        std::cout << objpool[i].capacity();
+        if(i < objpool.size()-1) {
+            std::cout << " | ";
+        }
+    }
+    std::cout << ']' << std::endl;
+    std::cout << "====================" << std::endl;
 }
 
 //////////////////////////////////////////////////

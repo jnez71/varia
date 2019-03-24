@@ -26,7 +26,8 @@ Cost objective(double x_choice, double y_choice) {
 //////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
-    Cost c = objective(3.14159, -2); // 17, -1, -9
+    Cost c = objective(1, 1);
+    c = objective(3.14159, -2); // 18, -1, -9
     std::cout << "    c: " << c.val << std::endl;
     std::cout << "dc/dx: " << c.grad[0] << std::endl;
     std::cout << "dc/dy: " << c.grad[1] << std::endl;

@@ -14,7 +14,6 @@ class Var;
 class VarGraph {
 private:
     friend class Var;
-    static uint expected_size;
 
     struct Dep {
         uint const arity;
@@ -22,7 +21,11 @@ private:
         double const d_dx;
         uint const y;
         double const d_dy;
+        Dep(uint arity, uint x, double d_dx, uint y, double d_dy) :
+            arity(arity), x(x), d_dx(d_dx), y(y), d_dy(d_dy) {}
     };
+
+    static std::vector<std::vector<Dep>> objpool;
     std::vector<Dep> deps;
 
     uint new_nullary();
@@ -32,7 +35,7 @@ private:
 public:
     VarGraph();
     ~VarGraph();
-    static void expect_size(uint n) {expected_size = n;}
+    static void diagnose();
     inline uint size() const {return deps.size();}
 };
 
