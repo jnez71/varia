@@ -36,6 +36,7 @@ public:
     VarGraph();
     ~VarGraph();
     static void diagnose();
+    inline void reset() {deps.clear();}
     inline uint size() const {return deps.size();}
 };
 
