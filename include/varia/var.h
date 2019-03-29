@@ -12,16 +12,15 @@ namespace varia {
 
 class Var {
 private:
-    VarGraph* vgp;
-    uint idx;
-    double val;
+    VarGraph* const vgp;
+    uint const idx;
+    double const val;
 
     Var(VarGraph* vgp, uint idx, double val);
 
 public:
     Var(VarGraph* vgp, double val);
-    Var(Var const& other);
-    Var& operator=(Var const& other);
+    Var(Var const& other, double val);
 
     class Grad {
     private:
@@ -61,6 +60,8 @@ public:
     Var operator*(double k) const;
     Var operator/(double k) const;
     Var rdivide(double k) const;
+
+    inline VarGraph* get_vgp() const {return vgp;}
 };
 
 //////////////////////////////////////////////////

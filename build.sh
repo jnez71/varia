@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 ####
-# Description.
+# Uses GCC to compile varia source into a "build" directory.
+# Runs a test if the build succeeds.
 ####
 
-set -e
 pushd $(dirname $0) > /dev/null
 
 mkdir -p build
-cd build
 
-g++ ../source/*.cpp -std=c++11 -O3 -flto -Wpedantic -Wall -Wextra -I ../include -o test
+g++ source/*.cpp  -std=c++14  -O3 -ffast-math -flto  -Wpedantic -Wall -Wextra  -I include  -o build/test
 
-echo "===="
-./test
-echo "===="
+if [ $? -eq 0 ]; then
+    echo "===="
+    ./build/test
+    echo "===="
+else
+    echo "(skipping run)"
+fi
 
 popd > /dev/null

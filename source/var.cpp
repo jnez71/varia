@@ -23,19 +23,10 @@ Var::Var(VarGraph* vgp, double val) :
 
 ////
 
-Var::Var(Var const& other) {
-    vgp = other.vgp;
-    idx = other.idx;
-    val = other.val;
-}
-
-////
-
-Var& Var::operator=(Var const& other) {
-    vgp = other.vgp;
-    idx = other.idx;
-    val = other.val;
-    return *this;
+Var::Var(Var const& other, double val) :
+    vgp(other.vgp),
+    idx(vgp->new_nullary()),
+    val(val) {
 }
 
 //////////////////////////////////////////////////
