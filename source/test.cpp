@@ -21,6 +21,7 @@ Cost objective(double x_choice, double y_choice) {
     Var w;
     w = q;
     w = w + 1;
+    w.reset(123);
     Var::Grad dc = c.gradient();
     return Cost{c.value(),
                 {dc.d(x), dc.d(y)}};

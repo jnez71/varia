@@ -20,8 +20,13 @@ private:
 
 public:
     Var() =default;
+    Var(Real val);
     Var(VarGraph* vgp, Real val);
     Var(Var const& other, Real val);
+
+    void connect(VarGraph* new_vgp);
+    void reset(Real new_val);
+    bool connected() const {return !(vgp == nullptr);}
 
     class Grad {
     private:
@@ -96,6 +101,12 @@ inline Var::Var(VarGraph* vgp, uint idx, Real val) :
 
 /////////////////////////
 
+inline Var::Var(Real val) :
+    val(val) {
+}
+
+/////
+
 inline Var::Var(VarGraph* vgp, Real val) :
     vgp(vgp),
     idx(vgp->new_nullary()),
@@ -108,6 +119,21 @@ inline Var::Var(Var const& other, Real val) :
     vgp(other.vgp),
     idx(vgp->new_nullary()),
     val(val) {
+}
+
+/////////////////////////
+
+inline void Var::connect(VarGraph* new_vgp) {
+    vgp = new_vgp;
+    idx = vgp->new_nullary();
+}
+
+/////
+
+inline void Var::reset(Real new_val) {
+    vgp = nullptr;
+    idx = 0;
+    val = new_val;
 }
 
 /////////////////////////
